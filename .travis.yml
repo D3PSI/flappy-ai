@@ -1,7 +1,8 @@
 language: java
-install: ant deps
-jdk: oraclejdk8
-script: ant test
+jdk: 
+  - openjdk8
+script: 
+  - ant build
 notifications:
   email:
     recipients:
