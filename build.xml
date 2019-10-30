@@ -8,8 +8,50 @@
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="11"/>
     <property name="source" value="11"/>
+    <path id="lwjgl3.userclasspath">
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl/lwjgl-natives-windows-x86.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl/lwjgl-natives-windows.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl/lwjgl-natives-macos.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl/lwjgl-natives-linux-arm64.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl/lwjgl-natives-linux-arm32.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl/lwjgl-natives-linux.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl/lwjgl.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-assimp/lwjgl-assimp-natives-windows-x86.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-assimp/lwjgl-assimp-natives-windows.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-assimp/lwjgl-assimp-natives-macos.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-assimp/lwjgl-assimp-natives-linux-arm64.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-assimp/lwjgl-assimp-natives-linux-arm32.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-assimp/lwjgl-assimp-natives-linux.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-assimp/lwjgl-assimp.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-glfw/lwjgl-glfw-natives-windows-x86.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-glfw/lwjgl-glfw-natives-windows.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-glfw/lwjgl-glfw-natives-macos.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-glfw/lwjgl-glfw-natives-linux-arm64.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-glfw/lwjgl-glfw-natives-linux-arm32.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-glfw/lwjgl-glfw-natives-linux.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-glfw/lwjgl-glfw.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-openal/lwjgl-openal-natives-windows-x86.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-openal/lwjgl-openal-natives-windows.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-openal/lwjgl-openal-natives-macos.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-openal/lwjgl-openal-natives-linux-arm64.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-openal/lwjgl-openal-natives-linux-arm32.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-openal/lwjgl-openal-natives-linux.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-openal/lwjgl-openal.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-opengl/lwjgl-opengl-natives-windows-x86.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-opengl/lwjgl-opengl-natives-windows.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-opengl/lwjgl-opengl-natives-macos.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-opengl/lwjgl-opengl-natives-linux-arm64.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-opengl/lwjgl-opengl-natives-linux-arm32.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-opengl/lwjgl-opengl-natives-linux.jar"/>
+        <pathelement location="../../../../../flappy-ai/lib/lwjgl/lwjgl-opengl/lwjgl-opengl.jar"/>
+    </path>
     <path id="flappy-ai.classpath">
         <pathelement location="bin"/>
+        <path refid="lwjgl3.userclasspath"/>
+    </path>
+    <path id="run.FlappyWindow.classpath">
+        <path refid="flappy-ai.classpath"/>
+        <path refid="lwjgl3.userclasspath"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -46,5 +88,10 @@
     <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
+    </target>
+    <target name="FlappyWindow">
+        <java classname="main.FlappyWindow" failonerror="true" fork="yes">
+            <classpath refid="run.FlappyWindow.classpath"/>
+        </java>
     </target>
 </project>
