@@ -1,15 +1,18 @@
 package main;
 
-import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
+
+import shaders.FragmentShader;
+import shaders.ShaderPipeline;
+import shaders.VertexShader;
 
 import java.nio.*;
 
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL45.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
@@ -25,22 +28,20 @@ public class FlappyWindow {
 	 * Runs the application
 	 */
 	public void run() {
-		System.out.println("Hello LWJGL " + Version.getVersion() + "!");
-
-		init();
-		loop();
-
-		glfwFreeCallbacks(window);
-		glfwDestroyWindow(window);
-
-		glfwTerminate();
-		glfwSetErrorCallback(null).free();
+		try {
+			init();
+			loop();
+			clean();
+		} catch (Exception e_) {
+			e_.printStackTrace();
+		}
 	}
 
 	/**
 	 * Initializes the application
+	 * @throws Exception Thrown when failed to initialize application
 	 */
-	private void init() {
+	private void init() throws Exception {
 		GLFWErrorCallback.createPrint(System.err).set();
 
 		if ( !glfwInit() )
@@ -81,10 +82,17 @@ public class FlappyWindow {
 
 	/**
 	 * Defines the main loop for the application
+	 * @throws Exception Thrown when failed to initialize user defined objects
 	 */
-	private void loop() {
+	private void loop() throws Exception {
 		GL.createCapabilities();
-
+		
+		VertexShader vs = new VertexShader("shaders/main.vert");
+		FragmentShader fs = new FragmentShader("shaders/main.frag");
+		ShaderPipeline pipe = new ShaderPipeline();
+		pipe.vs(vs);
+		pipe.fs(fs);
+	
 		glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 
 		while ( !glfwWindowShouldClose(window) ) {
@@ -94,6 +102,16 @@ public class FlappyWindow {
 
 			glfwPollEvents();
 		}
+	}
+	
+	/**
+	 * Handles cleaning of resources on shutdown
+	 */
+	private void clean() {
+		glfwFreeCallbacks(window);
+		glfwDestroyWindow(window);
+		glfwTerminate();
+		glfwSetErrorCallback(null).free();
 	}
 
 	/**
