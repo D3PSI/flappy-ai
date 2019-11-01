@@ -23,6 +23,7 @@ import static org.lwjgl.system.MemoryUtil.*;
 public class FlappyWindow {
 
 	private long window;
+	private ShaderPipeline pipe;
 
 	/**
 	 * Runs the application
@@ -87,11 +88,8 @@ public class FlappyWindow {
 	private void loop() throws Exception {
 		GL.createCapabilities();
 		
-		VertexShader vs = new VertexShader("shaders/main.vert");
-		FragmentShader fs = new FragmentShader("shaders/main.frag");
-		ShaderPipeline pipe = new ShaderPipeline();
-		pipe.vs(vs);
-		pipe.fs(fs);
+		shaders();
+		buffers();
 	
 		glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 
@@ -112,8 +110,30 @@ public class FlappyWindow {
 		glfwDestroyWindow(window);
 		glfwTerminate();
 		glfwSetErrorCallback(null).free();
+		
+		pipe.clean();
 	}
 
+	/**
+	 * Initializes shaders
+	 * @throws Exception Thrown when failed to initialize shaders
+	 */
+	private void shaders() throws Exception {
+		VertexShader vs = new VertexShader("shaders/main.vert");
+		FragmentShader fs = new FragmentShader("shaders/main.frag");
+		pipe = new ShaderPipeline();
+		pipe.vs(vs);
+		pipe.fs(fs);
+	}
+	
+	/**
+	 * Initializes buffers
+	 * @throws Exception Thrown when failed to initialize buffers
+	 */
+	private void buffers() throws Exception {
+		
+	}
+	
 	/**
 	 * Defines the entry point for the application
 	 * @param args Command Line arguments

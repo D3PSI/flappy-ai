@@ -56,8 +56,12 @@ public class ShaderPipeline {
 	public void clean() {
 		unbind();
 		if(pipeID != 0)
-			vs.clean();
-			fs.clean();
+			try {
+				vs.clean();
+				fs.clean();
+			} catch (Exception e_) {
+				e_.printStackTrace();
+			}
 			GL45.glDeleteProgram(pipeID);
 	}
 	

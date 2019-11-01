@@ -67,9 +67,10 @@ public class Shader {
 	}
 	
 	/**
-	 * Handles cleaning of resources
+	 * Handles manual cleaning of resources
+	 * @throws NullPointerException Thrown when failed to delete shader because Java implicitly destroys the object
 	 */
-	public void clean() {
+	public void clean() throws NullPointerException {
 		GL45.glDeleteShader(shaderID);
 	}
 	
