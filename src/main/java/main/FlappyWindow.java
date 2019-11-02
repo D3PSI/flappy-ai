@@ -4,15 +4,9 @@ import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
 
-import shaders.FragmentShader;
-import shaders.ShaderPipeline;
-import shaders.VertexShader;
-
 import java.nio.*;
 
-import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL45.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
@@ -22,8 +16,10 @@ import static org.lwjgl.system.MemoryUtil.*;
  */
 public class FlappyWindow {
 
+	private static final int WIDTH = 1280;
+	private static final int HEIGHT = 720;
+	
 	private long window;
-	private ShaderPipeline pipe;
 
 	/**
 	 * Runs the application
@@ -32,7 +28,6 @@ public class FlappyWindow {
 		try {
 			init();
 			loop();
-			clean();
 		} catch (Exception e_) {
 			e_.printStackTrace();
 		}
@@ -52,7 +47,12 @@ public class FlappyWindow {
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
-		window = glfwCreateWindow(1080, 720, "Hello World!", NULL, NULL);
+		window = glfwCreateWindow(
+				WIDTH, 
+				HEIGHT, 
+				"Flappy AI - Genetic Algorithm", 
+				NULL, 
+				NULL);
 		if ( window == NULL )
 			throw new RuntimeException("Failed to create the GLFW window");
 
@@ -72,8 +72,7 @@ public class FlappyWindow {
 			glfwSetWindowPos(
 				window,
 				(vidmode.width() - pWidth.get(0)) / 2,
-				(vidmode.height() - pHeight.get(0)) / 2
-			);
+				(vidmode.height() - pHeight.get(0)) / 2);
 		} 
 
 		glfwMakeContextCurrent(window);
@@ -87,51 +86,12 @@ public class FlappyWindow {
 	 */
 	private void loop() throws Exception {
 		GL.createCapabilities();
-		
-		shaders();
-		buffers();
-	
-		glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+		GLRenderer.init(window);
 
-		while ( !glfwWindowShouldClose(window) ) {
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-			glfwSwapBuffers(window);
-
+		while (!glfwWindowShouldClose(window)) {
+			GLRenderer.render(window);
 			glfwPollEvents();
 		}
-	}
-	
-	/**
-	 * Handles cleaning of resources on shutdown
-	 */
-	private void clean() {
-		glfwFreeCallbacks(window);
-		glfwDestroyWindow(window);
-		glfwTerminate();
-		glfwSetErrorCallback(null).free();
-		
-		pipe.clean();
-	}
-
-	/**
-	 * Initializes shaders
-	 * @throws Exception Thrown when failed to initialize shaders
-	 */
-	private void shaders() throws Exception {
-		VertexShader vs = new VertexShader("shaders/main.vert");
-		FragmentShader fs = new FragmentShader("shaders/main.frag");
-		pipe = new ShaderPipeline();
-		pipe.vs(vs);
-		pipe.fs(fs);
-	}
-	
-	/**
-	 * Initializes buffers
-	 * @throws Exception Thrown when failed to initialize buffers
-	 */
-	private void buffers() throws Exception {
-		
 	}
 	
 	/**
