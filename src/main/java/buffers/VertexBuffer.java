@@ -1,4 +1,4 @@
-package com.flappyai.buffers;
+package buffers;
 
 /**
  * Defines a handler for a vertex buffer

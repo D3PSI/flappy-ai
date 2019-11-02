@@ -1,4 +1,4 @@
-package com.flappyai.shaders;
+package shaders;
 
 import org.lwjgl.opengl.*;
 import static org.lwjgl.opengl.GL45.*;

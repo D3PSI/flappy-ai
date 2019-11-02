@@ -1,12 +1,12 @@
-package com.flappyai.main;
+package main;
 
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
 
-import com.flappyai.shaders.FragmentShader;
-import com.flappyai.shaders.ShaderPipeline;
-import com.flappyai.shaders.VertexShader;
+import shaders.FragmentShader;
+import shaders.ShaderPipeline;
+import shaders.VertexShader;
 
 import java.nio.*;
 
