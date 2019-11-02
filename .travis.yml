@@ -1,8 +1,9 @@
 language: java
 jdk: 
+  - openjdk11
   - openjdk12
 script: 
-  - ant build
+  - gradle build
 notifications:
   email:
     recipients:

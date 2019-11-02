@@ -1,0 +1,72 @@
+plugins {
+	id 'java'
+}
+
+repositories {
+	jcenter();
+}
+
+dependencies {
+	implementation files('lib/lwjgl/lwjgl/lwjgl-natives-linux-arm32.jar')
+	implementation files('lib/lwjgl/lwjgl/lwjgl-natives-linux-arm64.jar')
+	implementation files('lib/lwjgl/lwjgl/lwjgl-natives-linux.jar')
+	implementation files('lib/lwjgl/lwjgl/lwjgl-natives-macos.jar')
+	implementation files('lib/lwjgl/lwjgl/lwjgl-natives-windows-x86.jar')
+	implementation files('lib/lwjgl/lwjgl/lwjgl-natives-windows.jar')
+	implementation files('lib/lwjgl/lwjgl/lwjgl.jar')
+	implementation files('lib/lwjgl/lwjgl-assimp/lwjgl-assimp-natives-linux-arm32.jar')
+	implementation files('lib/lwjgl/lwjgl-assimp/lwjgl-assimp-natives-linux-arm64.jar')
+	implementation files('lib/lwjgl/lwjgl-assimp/lwjgl-assimp-natives-linux.jar')
+	implementation files('lib/lwjgl/lwjgl-assimp/lwjgl-assimp-natives-macos.jar')
+	implementation files('lib/lwjgl/lwjgl-assimp/lwjgl-assimp-natives-windows-x86.jar')
+	implementation files('lib/lwjgl/lwjgl-assimp/lwjgl-assimp-natives-windows.jar')
+	implementation files('lib/lwjgl/lwjgl-assimp/lwjgl-assimp.jar')
+	implementation files('lib/lwjgl/lwjgl-glfw/lwjgl-glfw-natives-linux-arm32.jar')
+	implementation files('lib/lwjgl/lwjgl-glfw/lwjgl-glfw-natives-linux-arm64.jar')
+	implementation files('lib/lwjgl/lwjgl-glfw/lwjgl-glfw-natives-linux.jar')
+	implementation files('lib/lwjgl/lwjgl-glfw/lwjgl-glfw-natives-macos.jar')
+	implementation files('lib/lwjgl/lwjgl-glfw/lwjgl-glfw-natives-windows-x86.jar')
+	implementation files('lib/lwjgl/lwjgl-glfw/lwjgl-glfw-natives-windows.jar')
+	implementation files('lib/lwjgl/lwjgl-glfw/lwjgl-glfw.jar')
+	implementation files('lib/lwjgl/lwjgl-openal/lwjgl-openal-natives-linux-arm32.jar')
+	implementation files('lib/lwjgl/lwjgl-openal/lwjgl-openal-natives-linux-arm64.jar')
+	implementation files('lib/lwjgl/lwjgl-openal/lwjgl-openal-natives-linux.jar')
+	implementation files('lib/lwjgl/lwjgl-openal/lwjgl-openal-natives-macos.jar')
+	implementation files('lib/lwjgl/lwjgl-openal/lwjgl-openal-natives-windows-x86.jar')
+	implementation files('lib/lwjgl/lwjgl-openal/lwjgl-openal-natives-windows.jar')
+	implementation files('lib/lwjgl/lwjgl-openal/lwjgl-openal.jar')
+	implementation files('lib/lwjgl/lwjgl-opengl/lwjgl-opengl-natives-linux-arm32.jar')
+	implementation files('lib/lwjgl/lwjgl-opengl/lwjgl-opengl-natives-linux-arm64.jar')
+	implementation files('lib/lwjgl/lwjgl-opengl/lwjgl-opengl-natives-linux.jar')
+	implementation files('lib/lwjgl/lwjgl-opengl/lwjgl-opengl-natives-macos.jar')
+	implementation files('lib/lwjgl/lwjgl-opengl/lwjgl-opengl-natives-windows-x86.jar')
+	implementation files('lib/lwjgl/lwjgl-opengl/lwjgl-opengl-natives-windows.jar')
+	implementation files('lib/lwjgl/lwjgl-opengl/lwjgl-opengl.jar')
+
+    implementation 'com.google.guava:guava:26.0-jre'
+
+    testImplementation 'junit:junit:4.12'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.flappyai.main.FlappyWindow'
+    }
+}
+
+task fatJar(type: Jar) {
+  manifest.from jar.manifest
+  classifier = 'all'
+  from {
+    configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+  } {
+    exclude "META-INF/*.SF"
+    exclude "META-INF/*.DSA"
+    exclude "META-INF/*.RSA"
+  }
+  with jar
+}
+
+artifacts {
+    archives fatJar
+}

@@ -29,3 +29,10 @@ hs_err_pid*
 .metadata/version.ini
 .metadata/.mylyn/repositories.xml.zip
 .metadata/.mylyn/tasks.xml.zip
+.settings/
+
+# Gradle files
+.gradle/
+
+# Gradle temporary files
+build/tmp/
