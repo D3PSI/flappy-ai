@@ -4,6 +4,7 @@ plugins {
 
 repositories {
 	jcenter();
+	mavenCentral();
 }
 
 dependencies {
@@ -42,15 +43,17 @@ dependencies {
 	implementation files('lib/lwjgl/lwjgl-opengl/lwjgl-opengl-natives-windows-x86.jar')
 	implementation files('lib/lwjgl/lwjgl-opengl/lwjgl-opengl-natives-windows.jar')
 	implementation files('lib/lwjgl/lwjgl-opengl/lwjgl-opengl.jar')
+	
+	implementation group: 'io.jenetics', name: 'jenetics', version: '5.0.1'
 
-    implementation 'com.google.guava:guava:26.0-jre'
+    implementation 'com.google.guava:guava:26.0-jre'    
 
     testImplementation 'junit:junit:4.12'
 }
 
 jar {
     manifest {
-        attributes 'Main-Class': 'main.FlappyWindow'
+        attributes 'Main-Class': 'com.main.FlappyWindow'
     }
 }
 
