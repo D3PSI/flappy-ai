@@ -1,7 +1,5 @@
 package com.buffers;
 
-import java.util.ArrayList;
-
 import org.lwjgl.opengl.GL45;
 
 /**
@@ -11,8 +9,8 @@ import org.lwjgl.opengl.GL45;
 public class Model2D {
 
 	private VertexBuffer vertexData;
+	private int VAO;
 	private int vertexCount = 0;
-	private ArrayList<Integer> VAOs = new ArrayList<Integer>();;
 	
 	/**
 	 * Constructor with vertex data
@@ -20,8 +18,17 @@ public class Model2D {
 	 * @param vertexCount_ The number of vertices
 	 */
 	public Model2D(float[] vertexData_, int vertexCount_) {
+		this.VAO = createVertexArray();
 		this.vertexData = new VertexBuffer(vertexData_);
 		this.vertexCount = vertexCount_;
+	}
+	
+	/**
+	 * Creates a new vertex array object
+	 */
+	private int createVertexArray() {
+		int vao = GL45.glGenVertexArrays();
+		return vao; 
 	}
 	
 	/**
@@ -31,10 +38,8 @@ public class Model2D {
 	 * @param stride_ The stride between the datapoints
 	 * @param offset_ The starting offset
 	 */
-	public void addVertexArray(int index_, int size_, int stride_, int offset_) {
-		int vao = GL45.glGenVertexArrays();
-		VAOs.add(vao);
-		GL45.glBindVertexArray(vao);
+	public void addToVertexArray(int index_, int size_, int stride_, int offset_) {
+		GL45.glBindVertexArray(VAO);
 		GL45.glVertexAttribPointer(
 				index_, 
 				size_, 
@@ -46,11 +51,10 @@ public class Model2D {
 	}
 	
 	/**
-	 * Binds a VAO
-	 * @param index_ The VAO's index
+	 * Binds the VAO
 	 */
-	public void bindVAO(int index_) {
-		GL45.glBindVertexArray(index_);
+	public void bindVAO() {
+		GL45.glBindVertexArray(VAO);
 	}
 	
 	/**
@@ -78,6 +82,7 @@ public class Model2D {
 	 * Draws the bound vertex buffer
 	 */
 	public void draw() {
+		bindVAO();
 		GL45.glDrawArrays(GL45.GL_TRIANGLES, 0, vertexCount);
 	}
 	
@@ -86,9 +91,7 @@ public class Model2D {
 	 */
 	public void clean() {
 		vertexData.clean();
-		for(int vao : VAOs) {
-			GL45.glDeleteVertexArrays(vao);
-		}
+		GL45.glDeleteVertexArrays(VAO);
 	}
 	
 }

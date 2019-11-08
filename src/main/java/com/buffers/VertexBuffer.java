@@ -3,6 +3,7 @@ package com.buffers;
 import java.nio.FloatBuffer;
 
 import org.lwjgl.opengl.GL45;
+import org.lwjgl.system.MemoryUtil;
 
 /**
  * Defines a handler class for a vertex buffer
@@ -17,8 +18,7 @@ public class VertexBuffer {
 	 * Constructor with vertex data
 	 */
 	public VertexBuffer(float[] vertices_) {
-		FloatBuffer vertexBuffer = Buffer.fillFloatBuffer(vertices_);
-		this.buffer = vertexBuffer;
+		this.buffer = MemoryUtil.memAllocFloat(vertices_.length).put(vertices_).flip();
 		VBO = GL45.glGenBuffers();
 	}
 	

@@ -25,14 +25,14 @@ public class ShaderPipeline {
 	 */
 	public void link() throws Exception {
 		GL45.glLinkProgram(pipeID);
-		if(GL45.glGetProgrami(pipeID, GL_LINK_STATUS) == 0)
+		if(GL45.glGetProgrami(pipeID, GL_LINK_STATUS) != 0)
 			throw new Exception("Error linking shader code: " + GL45.glGetProgramInfoLog(pipeID, 1024));
 		if(vs.id() != 0)
 			GL45.glDetachShader(pipeID, vs.id());
 		if(fs.id() != 0)
 			GL45.glDetachShader(pipeID, fs.id());
 		GL45.glValidateProgram(pipeID);
-		if(GL45.glGetProgrami(pipeID, GL_VALIDATE_STATUS) == 0)
+		if(GL45.glGetProgrami(pipeID, GL_VALIDATE_STATUS) != 0)
 			System.err.println("Warning validating shader code: " + GL45.glGetProgramInfoLog(pipeID, 1024));
 	}
 	
@@ -70,7 +70,8 @@ public class ShaderPipeline {
 	 * @param vs_ VertexShader object
 	 */
 	public void vs(VertexShader vs_) {
-		GL45.glAttachShader(pipeID, vs_.id());
+		this.vs = vs_;
+		GL45.glAttachShader(pipeID, vs.id());
 	}
 	
 	/**
@@ -78,7 +79,8 @@ public class ShaderPipeline {
 	 * @param fs_ FragmentShader object
 	 */
 	public void fs(FragmentShader fs_) {
-		GL45.glAttachShader(pipeID, fs_.id());
+		this.fs = fs_;
+		GL45.glAttachShader(pipeID, fs.id());
 	}
 	
 	/**
