@@ -4,7 +4,7 @@
 
 ## Beginner-Level AI and Game-Programming
 
-This repository defines an entry project for genetic algorithms and AI. It serves as a learning-aid for my dear friend and myself. This project is written in Java and requires a Java Version 8 or higher. Java 13 is recommended to compile it for youself, even though unit tests do not want to work at the moment with Java 13. We are working on that, but since it is not very important we may as well just forget about it.
+This repository defines an entry project for genetic algorithms and AI. It serves as a learning-aid for my dear friend and myself. This project is written in Java and requires a Java Version 8 or higher. Java 13 is recommended to compile it for youself.
 
 Flappy-AI makes use of hardware acceleration through LWJGL's OpenGL 4.5 bindings. It uses a genetic algorithm to beat the game and create the perfect Flappy Bird Artificial Intelligence.
 
