@@ -1,9 +1,8 @@
 package com.main;
 
 import org.lwjgl.opengl.*;
-import org.lwjgl.system.MemoryUtil;
 
-import com.buffers.Model2D;
+import com.models.Model2D;
 import com.shaders.FragmentShader;
 import com.shaders.ShaderPipeline;
 import com.shaders.VertexShader;
@@ -11,7 +10,6 @@ import com.shaders.VertexShader;
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 
-import java.nio.FloatBuffer;
 
 /**
  * Defines a static utility class to handle rendering operations
@@ -22,13 +20,17 @@ public class GLRenderer {
 
 	private static ShaderPipeline pipe;
 	
-	static float[] vertices = new float[]{
-			0.0f, 0.5f, 0.0f,
-			-0.5f, -0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f
-			}; 
+	static float[]  vertices    = new float[]{
+            0.5f,  0.5f, 0.0f,
+            0.5f, -0.5f, 0.0f,
+           -0.5f, -0.5f, 0.0f, 
+           -0.5f,  0.5f, 0.0f
+            }; 
+    static int[]    indices     = new int[]{
+            0, 1, 3,
+            1, 2, 3
+            };
 	static Model2D quad;
-	static int VAO, VBO;
 	
 	/**
 	 * Initializes shaders and buffers
@@ -43,20 +45,8 @@ public class GLRenderer {
 		pipe.fs(fs);
 		pipe.link();
 
-		FloatBuffer verticesBuffer = MemoryUtil.memAllocFloat(vertices.length);
-		verticesBuffer.put(vertices).flip();
-		VAO = GL45.glGenVertexArrays();
-		GL45.glBindVertexArray(VAO);
-		VBO = GL45.glGenBuffers();
-		GL45.glBindBuffer(GL45.GL_ARRAY_BUFFER, VBO);
-		GL45.glBufferData(GL45.GL_ARRAY_BUFFER, verticesBuffer, GL45.GL_STATIC_DRAW);
-		GL45.glVertexAttribPointer(0, 3, GL45.GL_FLOAT, false, 0, 0);
-		GL45.glBindBuffer(GL45.GL_ARRAY_BUFFER, 0);
-		GL45.glBindVertexArray(0);
-		if (verticesBuffer != null) {
-			MemoryUtil.memFree(verticesBuffer);
-		}
-		
+        quad = new Model2D(vertices, indices);
+
 		GL45.glClearColor(0.3f, 0.1f, 0.2f, 0.0f);
 	}
 	
@@ -68,12 +58,8 @@ public class GLRenderer {
 		
 		GL45.glClear(GL45.GL_COLOR_BUFFER_BIT | GL45.GL_DEPTH_BUFFER_BIT);
 		
-		pipe.bind();
-		GL45.glBindVertexArray(VAO);
-		GL45.glEnableVertexAttribArray(0);
-		GL45.glDrawArrays(GL45.GL_TRIANGLES, 0, 3);
-		GL45.glDisableVertexAttribArray(0);
-		GL45.glBindVertexArray(0);
+        pipe.bind();
+        quad.draw();
 		
 		glfwSwapBuffers(window_);
 	}
