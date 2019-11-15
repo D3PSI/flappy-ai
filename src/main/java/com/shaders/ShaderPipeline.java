@@ -1,9 +1,14 @@
 package com.shaders;
 
+import com.math.Matrix4f;
+
 import org.lwjgl.opengl.*;
 import static org.lwjgl.opengl.GL45.*;
+import org.lwjgl.system.MemoryUtil;
 
-/**
+import java.nio.FloatBuffer;
+
+/**e
  * Defines a ShaderPipeline object containing all the needed pipeline stages
  * @author d3psi
  */
@@ -91,4 +96,15 @@ public class ShaderPipeline {
 		return pipeID;
 	}
 	
+	/**
+	 * Sets a uniform 4 by 4 matrix in the shaders
+	 * @param val_ The value to set the uniform to
+	 * @param name_ The name of the uniform variable
+	 */
+	public void setMat4f(Matrix4f val_, String name_) {
+		FloatBuffer valBuf = MemoryUtil.memAllocFloat(16);
+		val_.toBuffer(valBuf);
+		GL45.glUniformMatrix4fv(GL45.glGetUniformLocation(pipeID, name_), false, valBuf);
+	} 
+
 }

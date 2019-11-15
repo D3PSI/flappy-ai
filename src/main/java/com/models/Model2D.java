@@ -6,6 +6,8 @@ import org.lwjgl.system.MemoryUtil;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
+import com.math.Matrix4f;
+
 /**
  * Defines a 2D-Model object
  * @author d3psi
@@ -17,6 +19,8 @@ public class Model2D {
     private int     EBO;
 	private int     vertexCount     = 0;
     private boolean indexed;
+
+    public Matrix4f model;
     
 	/**
 	 * Constructor with vertex data
