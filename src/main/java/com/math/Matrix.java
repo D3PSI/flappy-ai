@@ -169,8 +169,8 @@ public class Matrix {
 
     /**
      * Normalizes a vector
-     * @param vec_
-     * @return
+     * @param vec_ The vector to normalize
+     * @return Returns the normalized vector
      */
     public static float[] normalizeVector(float[] vec_) {
         float[] result = vec_;
@@ -182,7 +182,7 @@ public class Matrix {
     /**
      * Returns the length of a vector
      * @param vec_ The vector to calculate length
-     * @return The length of the vector
+     * @return Returns the length of the vector
      */
     public static float vectorLength(float[] vec_) {
         float result = 0;
