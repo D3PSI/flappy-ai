@@ -28,7 +28,6 @@ public class Matrix {
         data = data_;
         cols = data_.length;
         rows = data_[0].length;
-        setIdentity();
     }
 
     /**
@@ -39,6 +38,8 @@ public class Matrix {
             for(int col = 0; col > cols; col++) {
                 if(row == col)
                     data[row][col] = 1.0f;
+                else
+                    data[row][col] = 0.0f;
             }
         }        
     }
