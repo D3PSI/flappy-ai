@@ -2,11 +2,7 @@ package com.main;
 
 import org.lwjgl.opengl.*;
 
-import com.models.Model2D;
-import com.shaders.FragmentShader;
-import com.shaders.ShaderPipeline;
-import com.shaders.VertexShader;
-import com.math.*;
+import com.models.*;
 
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
@@ -14,22 +10,9 @@ import static org.lwjgl.glfw.GLFW.*;
 /**
  * Defines a static utility class to handle rendering operations
  * @author d3psi
- *
  */
 public class GLRenderer {
-
-	private static ShaderPipeline pipe;
 	
-	static float[]  vertices    = new float[]{
-            0.5f,  0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f,
-           -0.5f, -0.5f, 0.0f, 
-           -0.5f,  0.5f, 0.0f
-            }; 
-    static int[]    indices     = new int[]{
-            0, 1, 3,
-            1, 2, 3
-            };
 	static Model2D quad;
 	
 	/**
@@ -38,16 +21,8 @@ public class GLRenderer {
 	 * @throws Exception Thrown when failed to initialize shaders and buffers
 	 */
 	public static void init(final long window_) throws Exception {
-		final VertexShader vs = new VertexShader("shaders/main.vert");
-		final FragmentShader fs = new FragmentShader("shaders/main.frag");
-		pipe = new ShaderPipeline();
-		pipe.vs(vs);
-		pipe.fs(fs);
-		pipe.link();
-
-		quad = new Model2D(vertices, indices);
-
-		GL45.glClearColor(0.3f, 0.1f, 0.2f, 0.0f);
+		GL45.glEnable(GL45.GL_TEXTURE_2D);
+		quad = new Model2D("res/textures/bird1.png");
 	}
 
 	/**
@@ -59,15 +34,7 @@ public class GLRenderer {
 
 		GL45.glClear(GL45.GL_COLOR_BUFFER_BIT | GL45.GL_DEPTH_BUFFER_BIT);
 
-		pipe.bind();
-		Matrix4f model;
-		model = new Matrix4f();
-		model = Matrix4f.translate(0.1f, 0.7f, 0.0f);
-		model = Matrix4f.rotate((float) glfwGetTime() * 90.0f, 0.0f, 0.0f, 1.0f);
-		pipe.setMat4f(model, "model");
 		quad.draw();
-
-		glfwSwapBuffers(window_);
 	}
 
 	/**
@@ -76,9 +43,6 @@ public class GLRenderer {
 	 * @param window_ GLFW's window
 	 */
 	public static void clean(final long window_) {
-
-		quad.clean();
-		pipe.clean();
 		
 		glfwFreeCallbacks(window_);
 		glfwDestroyWindow(window_);

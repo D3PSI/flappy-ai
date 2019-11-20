@@ -16,8 +16,11 @@ import static org.lwjgl.system.MemoryUtil.*;
  */
 public class FlappyWindow {
 
-	private static final int WIDTH = 1280;
-	private static final int HEIGHT = 720;
+	private static final int 		WIDTH 		= 1280;
+	private static final int 		HEIGHT 		= 720;
+	private static final String 	TITLE 		= "Flappy AI - Genetic Algorithm";
+	public static int 				width 		= 0;
+	public static int 				height 		= 0;
 	
 	private long window;
 
@@ -40,28 +43,33 @@ public class FlappyWindow {
 	private void init() throws Exception {
 		GLFWErrorCallback.createPrint(System.err).set();
 
-		if ( !glfwInit() )
+		if(!glfwInit())
 			throw new IllegalStateException("Unable to initialize GLFW");
-
-		glfwDefaultWindowHints();
-		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
 		window = glfwCreateWindow(
 				WIDTH, 
 				HEIGHT, 
-				"Flappy AI - Genetic Algorithm", 
+				TITLE, 
 				NULL, 
 				NULL);
-		if ( window == NULL )
+		if (window == NULL)
 			throw new RuntimeException("Failed to create the GLFW window");
 
 		glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
-			if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
+			if(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
 				glfwSetWindowShouldClose(window, true);
+			
 		});
 
-		try ( MemoryStack stack = stackPush() ) {
+		glfwSetFramebufferSizeCallback(window, (window_, width_, height_) -> {
+            if (width_ > 0 && height_ > 0 && (width != width_ || height != height_)) {
+                width = width_;
+				height = height_;
+				GL45.glViewport(0, 0, width_, height_);
+            }
+        });
+
+		try (MemoryStack stack = stackPush()) {
 			IntBuffer pWidth = stack.mallocInt(1); 
 			IntBuffer pHeight = stack.mallocInt(1);
 
@@ -91,6 +99,7 @@ public class FlappyWindow {
 		while (!glfwWindowShouldClose(window)) {
 			GLRenderer.render(window);
 			glfwPollEvents();
+			glfwSwapBuffers(window);
 		}
 	}
 	
