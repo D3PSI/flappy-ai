@@ -102,7 +102,7 @@ public class Matrix {
     /**
      * Rotates a matrix around a given axis
      * @param thisMat_ The matrix to rotate
-     * @param rad_ The angle to rotate by
+     * @param rad_ The angle to rotate by (in radians)
      * @param axis_ The axis to rotate around
      * @return Returns the rotated matrix
      * @throws IllegalArgumentException Thrown when the matrix or the axis is not suitable for rotation
@@ -111,9 +111,77 @@ public class Matrix {
         if(thisMat_.cols() < 2 || thisMat_.rows() < 2 || axis_.length < 2 
             || (thisMat_.rows < axis_.length) || (thisMat_.cols() < axis_.length))
             throw new IllegalArgumentException("Matrix of inappropriate size used in rotation");
+        if(vectorLength(axis_) != 1.0f) 
+            axis_ = normalizeVector(axis_);
         Matrix result = new Matrix(thisMat_.rows(), thisMat_.cols());
         // TODO: Implement
         return result;
+    }
+
+    /**
+     * Rotates a matrix around the x-axis
+     * @param thisMat_ The matrix to rotate
+     * @param rad_ The angle to rotate by (in radians)
+     * @return Returns the rotated matrix
+     * @throws IllegalArgumentException Thrown then the matrix is not suitable for rotation
+     */
+    public static Matrix rotateX(Matrix thisMat_, float rad_) throws IllegalArgumentException {
+        if(thisMat_.rows < 3 || thisMat_.cols() < 3)
+            throw new IllegalArgumentException("Matrix of inappropriate size used in rotation");
+        Matrix result = new Matrix(thisMat_.rows(), thisMat_.cols());
+        return result;
+    }
+
+    /**
+     * Rotates a matrix around the y-axis
+     * @param thisMat_ The matrix to rotate
+     * @param rad_ The angle to rotate by (in radians)
+     * @return Returns the rotated matrix
+     * @throws IllegalArgumentException Thrown then the matrix is not suitable for rotation
+     */
+    public static Matrix rotateY(Matrix thisMat_, float rad_) throws IllegalArgumentException {
+        if(thisMat_.rows < 3 || thisMat_.cols() < 3)
+            throw new IllegalArgumentException("Matrix of inappropriate size used in rotation");
+        Matrix result = new Matrix(thisMat_.rows(), thisMat_.cols());
+        return result;
+    }
+
+    /**
+     * Rotates a matrix around the z-axis
+     * @param thisMat_ The matrix to rotate
+     * @param rad_ The angle to rotate by (in radians)
+     * @return Returns the rotated matrix
+     * @throws IllegalArgumentException Thrown then the matrix is not suitable for rotation
+     */
+    public static Matrix rotateZ(Matrix thisMat_, float rad_) throws IllegalArgumentException {
+        if(thisMat_.rows < 2 || thisMat_.cols() < 2)
+            throw new IllegalArgumentException("Matrix of inappropriate size used in rotation");
+        Matrix result = new Matrix(thisMat_.rows(), thisMat_.cols());
+        return result;
+    }
+
+    /**
+     * Normalizes a vector
+     * @param vec_
+     * @return
+     */
+    public static float[] normalizeVector(float[] vec_) {
+        float[] result = vec_;
+        for(int i = 0; i < vec_.length; i++)
+            result[i] /= vec_[i] / vectorLength(vec_);
+        return result;
+    }
+
+    /**
+     * Returns the length of a vector
+     * @param vec_ The vector to calculate length
+     * @return The length of the vector
+     */
+    public static float vectorLength(float[] vec_) {
+        float result = 0;
+        for(float comp : vec_)
+            result += comp * comp;
+        return (float)Math.sqrt(result);
     }
 
     /**
@@ -150,6 +218,20 @@ public class Matrix {
      */
     public void set(int row_, int col_, float val_) {
         data[row_][col_] = val_;
+    }
+
+    /**
+     * Prints the matrix to the console
+     */
+    public void print() {
+        String matString = "";
+        for(int row = 0; row < rows; row++)
+            for(int col = 0; col < cols; col++) {
+                matString += data[row][col] + "\t";
+                if(col == cols - 1)
+                    matString += "\n";
+            }
+        System.out.println(matString);
     }
 
 }
