@@ -31,7 +31,6 @@ public class GLRenderer {
 	 * @param window_ GLFW's window
 	 */
 	public static void render(final long window_) {
-
 		GL45.glClear(GL45.GL_COLOR_BUFFER_BIT | GL45.GL_DEPTH_BUFFER_BIT);
 
 		quad.draw();
@@ -43,7 +42,6 @@ public class GLRenderer {
 	 * @param window_ GLFW's window
 	 */
 	public static void clean(final long window_) {
-		
 		glfwFreeCallbacks(window_);
 		glfwDestroyWindow(window_);
 		glfwTerminate();
