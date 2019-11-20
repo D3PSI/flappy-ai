@@ -2,6 +2,7 @@ package com.main;
 
 import org.lwjgl.opengl.*;
 
+import com.math.*;
 import com.models.*;
 
 import static org.lwjgl.glfw.Callbacks.*;
@@ -32,7 +33,13 @@ public class GLRenderer {
 	 */
 	public static void render(final long window_) {
 		GL45.glClear(GL45.GL_COLOR_BUFFER_BIT | GL45.GL_DEPTH_BUFFER_BIT);
-
+		float[][] data1 = new float[][]{
+			{1.0f, 0.0f, 0.0f},
+			{0.0f, 1.0f, 0.0f},
+			{0.0f, 0.0f, 1.0f}
+		};
+		Matrix mat1 = new Matrix(data1);
+		mat1.rotateZ((float)glfwGetTime() * 3.14159f).print();
 		quad.draw();
 	}
 

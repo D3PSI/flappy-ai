@@ -123,12 +123,13 @@ public class Matrix {
      * @param thisMat_ The matrix to rotate
      * @param rad_ The angle to rotate by (in radians)
      * @return Returns the rotated matrix
-     * @throws IllegalArgumentException Thrown then the matrix is not suitable for rotation
+     * @throws IllegalArgumentException Thrown when the matrix is not suitable for rotation
      */
     public static Matrix rotateX(Matrix thisMat_, float rad_) throws IllegalArgumentException {
         if(thisMat_.rows < 3 || thisMat_.cols() < 3)
             throw new IllegalArgumentException("Matrix of inappropriate size used in rotation");
         Matrix result = new Matrix(thisMat_.rows(), thisMat_.cols());
+        // TODO: Implement
         return result;
     }
 
@@ -137,12 +138,13 @@ public class Matrix {
      * @param thisMat_ The matrix to rotate
      * @param rad_ The angle to rotate by (in radians)
      * @return Returns the rotated matrix
-     * @throws IllegalArgumentException Thrown then the matrix is not suitable for rotation
+     * @throws IllegalArgumentException Thrown when the matrix is not suitable for rotation
      */
     public static Matrix rotateY(Matrix thisMat_, float rad_) throws IllegalArgumentException {
         if(thisMat_.rows < 3 || thisMat_.cols() < 3)
             throw new IllegalArgumentException("Matrix of inappropriate size used in rotation");
         Matrix result = new Matrix(thisMat_.rows(), thisMat_.cols());
+        // TODO: Implement
         return result;
     }
 
@@ -151,12 +153,17 @@ public class Matrix {
      * @param thisMat_ The matrix to rotate
      * @param rad_ The angle to rotate by (in radians)
      * @return Returns the rotated matrix
-     * @throws IllegalArgumentException Thrown then the matrix is not suitable for rotation
+     * @throws IllegalArgumentException Thrown when the matrix is not suitable for rotation
      */
     public static Matrix rotateZ(Matrix thisMat_, float rad_) throws IllegalArgumentException {
         if(thisMat_.rows < 2 || thisMat_.cols() < 2)
             throw new IllegalArgumentException("Matrix of inappropriate size used in rotation");
         Matrix result = new Matrix(thisMat_.rows(), thisMat_.cols());
+        result.set(0, 0, (float)Math.cos(rad_));
+        result.set(0, 1, (float)-Math.sin(rad_));
+        result.set(1, 0, (float)Math.sin(rad_));
+        result.set(1, 1, (float)Math.cos(rad_));
+        result = multiply(thisMat_, result);
         return result;
     }
 
@@ -185,6 +192,17 @@ public class Matrix {
     }
 
     /**
+     * Rotates the matrix around the z-axis
+     * @param rad_ The angle to rotate the matrix (in radians)
+     * @return Returns the rotated matrix
+     * @throws IllegalArgumentException Thrown when the matrix is not suitable for rotation
+     */
+    public Matrix rotateZ(float rad_) {
+        this.data = Matrix.rotateZ(this, rad_).data();
+        return this;
+    }
+
+    /**
      * Returns the number of rows of the matrix
      * @return Returns the number of rows
      */
@@ -198,6 +216,14 @@ public class Matrix {
      */
     public int cols() {
         return cols;
+    }
+
+    /**
+     * Returns the 2D-array of elements of the matrix
+     * @return The 2D-array of elements of the matrix
+     */
+    public float[][] data() {
+        return data;
     }
 
     /**
