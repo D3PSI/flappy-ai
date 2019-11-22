@@ -23,6 +23,7 @@ public class GLRenderer {
 	public static void init(final long window_) throws Exception {
 		GL45.glEnable(GL45.GL_TEXTURE_2D);
 		quad = new Model2D("res/textures/bird1.png");
+		quad.scale(0.1f);
 	}
 
 	/**
@@ -33,7 +34,7 @@ public class GLRenderer {
 	public static void render(final long window_) {
 		GL45.glClear(GL45.GL_COLOR_BUFFER_BIT | GL45.GL_DEPTH_BUFFER_BIT);
 		quad.rotate(0.1f);
-		float[] trans = new float[]{0.25f, 0.25f};
+		float[] trans = new float[]{0.25f, 0.0f};
 		quad.translate(trans);
 		quad.draw();
 	}

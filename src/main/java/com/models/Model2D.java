@@ -81,4 +81,15 @@ public class Model2D {
         }
     }
 
+    /**
+     * Scales the quad by a scalar
+     * @param scalar_ The factor to scale by
+     */
+    public void scale(float scalar_) {
+        for(int i = 0; i < 4; i++) {
+            vertices[i][0] *= scalar_;
+            vertices[i][1] *= scalar_;
+        }
+    }
+
 }
