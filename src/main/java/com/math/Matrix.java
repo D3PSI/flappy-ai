@@ -95,9 +95,17 @@ public class Matrix {
             throw new IllegalArgumentException("Matrix of inappropriate size used in translation");
         Matrix result = new Matrix(thisMat_.rows(), thisMat_.cols());
         for(int row = 0; row < thisMat_.rows(); row++)
-            for(int col = thisMat_.cols(); col > thisMat_.cols() - 3; row++)
+            for(int col = thisMat_.cols(); col > thisMat_.cols(); row++)
                 result.set(row, col, thisMat_.get(row, col) + vec_[row]);
         return result;
+    }
+
+    /**
+     * Translates the matrix by vector
+     * @param vec_ The translation vector
+     */
+    public void translate(float[] vec_) {
+        this.data = Matrix.translate(this, vec_).data();
     }
 
     /**

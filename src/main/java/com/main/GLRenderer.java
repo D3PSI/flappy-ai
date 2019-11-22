@@ -32,7 +32,9 @@ public class GLRenderer {
 	 */
 	public static void render(final long window_) {
 		GL45.glClear(GL45.GL_COLOR_BUFFER_BIT | GL45.GL_DEPTH_BUFFER_BIT);
-		quad.rotate((float)(glfwGetTime() / 10.0));
+		quad.rotate(0.1f);
+		float[] trans = new float[]{0.25f, 0.25f};
+		quad.translate(trans);
 		quad.draw();
 	}
 

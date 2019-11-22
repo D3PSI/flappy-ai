@@ -70,4 +70,15 @@ public class Model2D {
         }
     }
 
+    /**
+     * Translates the quad
+     * @param vec_ The translation vector
+     */
+    public void translate(float[] vec_) {
+        for(int i = 0; i < 4; i++) {
+            vertices[i][0] += vec_[0];
+            vertices[i][1] += vec_[1];
+        }
+    }
+
 }
