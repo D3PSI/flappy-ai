@@ -5,8 +5,8 @@ package com.evo.NEAT.com.evo.NEAT.config;
  */
 public class NEAT_Config {
 
-    public static final int INPUTS = 4;
-    public static final int OUTPUTS = 2;
+    public static final int INPUTS = 3;
+    public static final int OUTPUTS = 1;
     public static final int HIDDEN_NODES = 10;
     public static final int POPULATION = 300;
 
