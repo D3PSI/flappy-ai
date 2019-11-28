@@ -57,7 +57,8 @@ public class FlappyWindow {
 
 		glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
 			if(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
-				glfwSetWindowShouldClose(window, true);
+                glfwSetWindowShouldClose(window, true);
+            GLRenderer.keyboard(key, action);
 			
 		});
 

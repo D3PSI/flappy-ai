@@ -27,11 +27,11 @@ public class GLRenderer {
             "res/textures/bird2.png",
             "res/textures/bird3.png"
         });
+        bird.scale(0.3f);
 	}
 
 	/**
 	 * Coordinates main rendering operations
-	 * 
 	 * @param window_ GLFW's window
 	 */
 	public static void render(final long window_) {
@@ -39,9 +39,13 @@ public class GLRenderer {
 		bird.draw(0);
 	}
 
+    public static void keyboard(int key_, int action_) {
+        if(key_ == GLFW_KEY_SPACE && action_ == GLFW_PRESS)
+            bird.jump();
+    }
+
 	/**
 	 * Handles cleaning of resources on shutdown
-	 * 
 	 * @param window_ GLFW's window
 	 */
 	public static void clean(final long window_) {
