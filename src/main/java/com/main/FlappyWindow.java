@@ -106,7 +106,6 @@ public class FlappyWindow {
 			glfwSwapBuffers(window);
             double now = glfwGetTime();
             deltaTime = (float)(last - now);
-            System.out.println(deltaTime);
         }
 	}
 	

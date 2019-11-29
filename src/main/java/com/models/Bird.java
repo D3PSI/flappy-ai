@@ -43,8 +43,11 @@ public class Bird extends Model2D {
         for(int i = 0; i < 4; i++) {
             yOff += yVel * FlappyWindow.deltaTime;
             yVel += -0.5f * FlappyWindow.deltaTime; 
-            if (yOff < -0.8f) {
+            if(yOff < -0.8f) {
                 yOff = -0.8f;
+                yVel = 0.0f;
+            } else if(yOff > 0.8f) {
+                yOff = 0.8f;
                 yVel = 0.0f;
             }
             float u = vertices[i][0] + xOff;
