@@ -30,6 +30,7 @@ public class Bird extends Model2D {
         for(String filename : filenames_) {
             textures.add(new Texture(filename));
         }
+        scale(0.5f);
     }
 
     /**
@@ -64,7 +65,7 @@ public class Bird extends Model2D {
      * Makes the bird jump
      */
     public void jump() {
-        yVel = -1.0f;
+        yVel = -0.5f;
     }
 
 }
