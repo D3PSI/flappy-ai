@@ -13,8 +13,8 @@ import static org.lwjgl.glfw.GLFW.*;
  */
 public class GLRenderer {
 	
-	static Bird bird;
-	
+    static Bird bird;
+    
 	/**
 	 * Initializes shaders and buffers
 	 * @param window_ GLFW's window
@@ -32,16 +32,16 @@ public class GLRenderer {
 
 	/**
 	 * Coordinates main rendering operations
-	 * @param window_ GLFW's window
 	 */
-	public static void render(final long window_) {
+	public static void render() {
 		GL45.glClear(GL45.GL_COLOR_BUFFER_BIT | GL45.GL_DEPTH_BUFFER_BIT);
 		bird.draw(0);
 	}
 
     public static void keyboard(int key_, int action_) {
-        if(key_ == GLFW_KEY_SPACE && action_ == GLFW_PRESS)
+        if(key_ == GLFW_KEY_SPACE && action_ == GLFW_PRESS) {
             bird.jump();
+        }
     }
 
 	/**

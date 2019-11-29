@@ -2,6 +2,8 @@ package com.models;
 
 import java.util.ArrayList;
 
+import com.main.FlappyWindow;
+
 import org.lwjgl.opengl.*;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -15,6 +17,10 @@ public class Bird extends Model2D {
     private ArrayList<Texture> textures = new ArrayList<>();
     private float xOff = -0.66f; 
     private float yOff = 0.0f;
+    private float yVel = 0.0f;
+
+    double start = glfwGetTime();
+    double now = glfwGetTime();
 
     /**
      * Constructor with filenames
@@ -35,6 +41,10 @@ public class Bird extends Model2D {
 
         GL45.glBegin(GL45.GL_QUADS);
         for(int i = 0; i < 4; i++) {
+            yOff += yVel * FlappyWindow.deltaTime;
+            yVel += -0.5f * FlappyWindow.deltaTime; 
+            if (yOff < -0.8f)
+                yOff = -0.8f;
             float u = vertices[i][0] + xOff;
             float v = vertices[i][1] + yOff;
             float x = texCoords[i][0];
@@ -48,8 +58,8 @@ public class Bird extends Model2D {
     /**
      * Makes the bird jump
      */
-    public void jump(float time_) {
-        yOff = 0.5f * -9.81f * time_ * time_;
+    public void jump() {
+        yVel -= 3.0;
     }
 
 }
