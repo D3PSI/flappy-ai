@@ -1,7 +1,5 @@
 package com.main;
 
-import java.util.Random;
-
 import org.lwjgl.opengl.*;
 
 import com.models.*;
@@ -16,7 +14,8 @@ import static org.lwjgl.glfw.GLFW.*;
 public class GLRenderer {
 	
 	static Tile[] tiles = new Tile[5];
-    static Bird bird;
+	public static Bird bird;
+	static long window;
 	
 	/**
 	 * Initializes shaders and buffers
@@ -24,6 +23,7 @@ public class GLRenderer {
 	 * @throws Exception Thrown when failed to initialize shaders and buffers
 	 */
 	public static void init(final long window_) throws Exception {
+		window = window_;
 		GL45.glEnable(GL45.GL_TEXTURE_2D);
 		GL45.glEnable(GL45.GL_BLEND);
 		GL45.glBlendFunc(GL45.GL_SRC_ALPHA, GL45.GL_ONE_MINUS_SRC_ALPHA);
@@ -34,7 +34,7 @@ public class GLRenderer {
         });
 		bird.scale(0.25f);
 		for(int i = 0; i < tiles.length; i++) {
-			tiles[i] = new Tile((float)(Math.random() * (0.1 - -0.1)) + -0.1f);
+			tiles[i] = new Tile((float)(Math.random() * (0.2 - -0.2)) + -0.2f);
 			tiles[i].translation = 2.3f + i * -0.66f;
 		}
 	}
@@ -46,12 +46,19 @@ public class GLRenderer {
 		GL45.glClear(GL45.GL_COLOR_BUFFER_BIT | GL45.GL_DEPTH_BUFFER_BIT);
 		for(Tile tile : tiles) {
 			if(tile.translation <= -1.0f) {
-				tile.height = (float)(Math.random() * (0.1 - -0.1)) + -0.1f;
+				tile.height = (float)(Math.random() * (0.2 - -0.2)) + -0.2f;
 				tile.translation += tiles.length * 0.66f;
 			}
 			tile.draw();
+			if(tile.collision()) {
+				try {
+					//GLRenderer.init(window);
+				} catch (Exception e_) {
+					e_.printStackTrace();
+				}
+			}
 		}
-		bird.draw(0);
+		bird.draw();
 	}
 
 	/**

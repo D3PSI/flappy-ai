@@ -16,7 +16,7 @@ public class Bird extends Model2D {
 
     private ArrayList<Texture> textures = new ArrayList<>();
     private float xOff = -0.66f; 
-    private float yOff = 0.0f;
+    public float yOff = 0.0f;
     private float yVel = 0.0f;
 
     double start = glfwGetTime();
@@ -35,10 +35,9 @@ public class Bird extends Model2D {
 
     /**
      * Draws the bird with the selected texture
-     * @param textureIndex_ The index of the texture to bind
      */
-    public void draw(int textureIndex_) {
-        textures.get(textureIndex_).bind();
+    public void draw() {
+        textures.get(0).bind();
 
         GL45.glBegin(GL45.GL_QUADS);
         for(int i = 0; i < 4; i++) {

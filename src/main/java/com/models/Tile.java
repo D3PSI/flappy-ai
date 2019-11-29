@@ -1,6 +1,7 @@
 package com.models;
 
 import com.main.FlappyWindow;
+import com.main.GLRenderer;
 
 /**
  * Defines a tile object for the background
@@ -70,6 +71,20 @@ public class Tile {
         pipetop.draw();
         ground.draw();
         ceiling.draw(); 
+    }
+
+    /**
+     * Checks for collision with pipes
+     * @return Returns true on collision
+     */
+    public boolean collision() {
+        if(pipebot.vertices[0][0] <= -0.5f && pipebot.vertices[0][0] > -0.66f) {
+            if(GLRenderer.bird.vertices[0][1] + GLRenderer.bird.yOff < pipebot.vertices[0][1] || GLRenderer.bird.vertices[1][1] + GLRenderer.bird.yOff > pipetop.vertices[1][1]) {
+                System.out.print("Hit!");
+                return true;
+            }
+        }
+        return false;
     }
 
 }
