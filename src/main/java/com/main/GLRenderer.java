@@ -1,5 +1,7 @@
 package com.main;
 
+import java.util.Random;
+
 import org.lwjgl.opengl.*;
 
 import com.models.*;
@@ -13,8 +15,8 @@ import static org.lwjgl.glfw.GLFW.*;
  */
 public class GLRenderer {
 	
+	static Tile[] tiles = new Tile[5];
     static Bird bird;
-	static Tile tile;
 	
 	/**
 	 * Initializes shaders and buffers
@@ -30,9 +32,11 @@ public class GLRenderer {
             "res/textures/bird2.png",
             "res/textures/bird3.png"
         });
-		bird.scale(0.3f);
-		tile = new Tile(0.0f);
-		Tile.initTiles();
+		bird.scale(0.25f);
+		for(int i = 0; i < tiles.length; i++) {
+			tiles[i] = new Tile((float)(Math.random() * (0.1 - -0.1)) + -0.1f);
+			tiles[i].translation = 2.3f + i * -0.66f;
+		}
 	}
 
 	/**
@@ -40,7 +44,13 @@ public class GLRenderer {
 	 */
 	public static void render() {
 		GL45.glClear(GL45.GL_COLOR_BUFFER_BIT | GL45.GL_DEPTH_BUFFER_BIT);
-		tile.draw();
+		for(Tile tile : tiles) {
+			if(tile.translation <= -1.0f) {
+				tile.height = (float)(Math.random() * (0.1 - -0.1)) + -0.1f;
+				tile.translation += tiles.length * 0.66f;
+			}
+			tile.draw();
+		}
 		bird.draw(0);
 	}
 

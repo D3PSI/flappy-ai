@@ -21,7 +21,8 @@ public class FlappyWindow {
 	private static final String 	TITLE 		= "Flappy AI - Genetic Algorithm";
 	public static int 				width 		= 0;
     public static int 				height 		= 0;
-    public static float             deltaTime   = 0.0f;
+	public static float             deltaTime   = 0.0f;
+	public static float 			timer 		= 0.0f;
 	
 	private long window;
 
@@ -105,7 +106,8 @@ public class FlappyWindow {
 			glfwPollEvents();
 			glfwSwapBuffers(window);
             double now = glfwGetTime();
-            deltaTime = (float)(last - now);
+			deltaTime = (float)(last - now);
+			timer = (float)(last - start);
         }
 	}
 	
