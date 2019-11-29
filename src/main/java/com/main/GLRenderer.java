@@ -52,7 +52,17 @@ public class GLRenderer {
     public static void keyboard(int key_, int action_) {
         if(key_ == GLFW_KEY_SPACE && action_ == GLFW_PRESS) {
             bird.jump();
-        }
+		}
+
+		if(key_ == GLFW_KEY_1 && action_ == GLFW_PRESS) {
+			GL45.glPolygonMode(GL45.GL_FRONT_AND_BACK, GL45.GL_FILL);
+		}
+		if(key_ == GLFW_KEY_2 && action_ == GLFW_PRESS) {
+			GL45.glPolygonMode(GL45.GL_FRONT_AND_BACK, GL45.GL_LINE);
+		}
+		if(key_ == GLFW_KEY_3 && action_ == GLFW_PRESS) {
+			GL45.glPolygonMode(GL45.GL_FRONT_AND_BACK, GL45.GL_POINT);
+		}
     }
 
 	/**
