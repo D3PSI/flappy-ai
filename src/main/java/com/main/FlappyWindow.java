@@ -12,7 +12,7 @@ import static org.lwjgl.system.MemoryUtil.*;
 
 /**
  * Defines the window handler class
- * @author d3psi
+ * @author D3PSI
  */
 public class FlappyWindow {
 
