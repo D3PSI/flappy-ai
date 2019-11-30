@@ -106,7 +106,6 @@ public class Tile {
                 && pipebot.vertices[0][0] < GLRenderer.bird.vertices[1][0] + GLRenderer.bird.xOff) {
                 if(GLRenderer.bird.vertices[2][1] + GLRenderer.bird.yOff < pipebot.vertices[0][1] 
                     || GLRenderer.bird.vertices[1][1] + GLRenderer.bird.yOff > pipetop.vertices[1][1]) {
-                    System.out.print("Hit!");
                     return true;
                 }
             }

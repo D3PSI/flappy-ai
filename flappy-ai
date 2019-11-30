@@ -1,0 +1,6 @@
+#!/bin/bash
+function code {
+    cd $HOME/flappy-ai
+}
+code
+java -jar build/libs/flappy-ai-all.jar &
