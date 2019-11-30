@@ -10,14 +10,14 @@ import org.lwjgl.opengl.*;
  */
 public class Model2D {
 
-    private Texture     tex;
-    private float[][]   vertices = new float[][]{
+    private     Texture     tex;
+    protected   float[][]   vertices = new float[][]{
         {-0.5f, 0.5f},
         {0.5f, 0.5f},
         {0.5f, -0.5f},
         {-0.5f, -0.5f}
     };
-    private float[][]   texCoords = new float[][]{
+    protected   float[][]   texCoords = new float[][]{
         {0, 0},
         {1, 0},
         {1, 1},
@@ -30,6 +30,12 @@ public class Model2D {
      */
     public Model2D(String filename_) {
         tex = new Texture(filename_);
+    }
+
+    /**
+     * Default constructor
+     */
+    public Model2D() {
     }
 
     /**

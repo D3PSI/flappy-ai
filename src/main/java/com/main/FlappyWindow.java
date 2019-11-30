@@ -21,7 +21,7 @@ import io.jenetics.util.Factory;
 
 /**
  * Defines the window handler class
- * @author d3psi
+ * @author D3PSI
  */
 public class FlappyWindow {
 
@@ -29,7 +29,9 @@ public class FlappyWindow {
 	private static final int 		HEIGHT 		= 720;
 	private static final String 	TITLE 		= "Flappy AI - Genetic Algorithm";
 	public static int 				width 		= 0;
-	public static int 				height 		= 0;
+    public static int 				height 		= 0;
+	public static float             deltaTime   = 0.0f;
+	public static float 			timer 		= 0.0f;
 	
 	private long window;
 
@@ -66,7 +68,8 @@ public class FlappyWindow {
 
 		glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
 			if(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
-				glfwSetWindowShouldClose(window, true);
+                glfwSetWindowShouldClose(window, true);
+            GLRenderer.keyboard(key, action);
 			
 		});
 
@@ -104,12 +107,17 @@ public class FlappyWindow {
 	private void loop() throws Exception {
 		GL.createCapabilities();
 		GLRenderer.init(window);
+        double start = glfwGetTime();
 
 		while (!glfwWindowShouldClose(window)) {
-			GLRenderer.render(window);
+            double last = glfwGetTime();
+			GLRenderer.render();
 			glfwPollEvents();
 			glfwSwapBuffers(window);
-		}
+            double now = glfwGetTime();
+			deltaTime = (float)(last - now);
+			timer = (float)(last - start);
+        }
 	}
 	
 	/**

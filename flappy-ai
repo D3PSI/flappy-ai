@@ -3,4 +3,8 @@ function code {
     cd $HOME/flappy-ai
 }
 code
+<<<<<<< HEAD
 java -jar build/libs/flappy-ai-all.jar &
+=======
+java -jar build/libs/flappy-ai-all.jar &
+>>>>>>> master
