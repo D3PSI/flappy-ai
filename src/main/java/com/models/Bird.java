@@ -14,8 +14,8 @@ import static org.lwjgl.glfw.GLFW.*;
  */
 public class Bird extends Model2D {
 
-    private ArrayList<Texture> textures = new ArrayList<>();
-    private float xOff = -0.66f; 
+    private static ArrayList<Texture> textures = new ArrayList<>();
+    public float xOff = -0.66f; 
     public float yOff = 0.0f;
     private float yVel = 0.0f;
 
@@ -24,13 +24,19 @@ public class Bird extends Model2D {
 
     /**
      * Constructor with filenames
-     * @param filenames_ Filenames to textures
      */
-    public Bird(String[] filenames_) {
+    public Bird() {
+        scale(0.125f);
+    }
+
+    /**
+     * Initializes texture loading to static field for performance increase with multiple birds
+     * @param filenames_
+     */
+    public static void textures(String[] filenames_) {
         for(String filename : filenames_) {
             textures.add(new Texture(filename));
         }
-        scale(0.5f);
     }
 
     /**

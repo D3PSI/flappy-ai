@@ -15,7 +15,6 @@ public class GLRenderer {
 	
 	static Tile[] tiles = new Tile[5];
 	public static Bird bird;
-	static long window;
 	
 	/**
 	 * Initializes shaders and buffers
@@ -23,20 +22,29 @@ public class GLRenderer {
 	 * @throws Exception Thrown when failed to initialize shaders and buffers
 	 */
 	public static void init(final long window_) throws Exception {
-		window = window_;
 		GL45.glEnable(GL45.GL_TEXTURE_2D);
 		GL45.glEnable(GL45.GL_BLEND);
 		GL45.glBlendFunc(GL45.GL_SRC_ALPHA, GL45.GL_ONE_MINUS_SRC_ALPHA);
-		bird = new Bird(new String[]{
+		Bird.textures(new String[]{
             "res/textures/bird1.png",
             "res/textures/bird2.png",
             "res/textures/bird3.png"
         });
-		bird.scale(0.25f);
+		bird = new Bird();
+		initTiles();
+	}
+
+	/**
+	 * Initializes the tiles
+	 */
+	public static void initTiles() {
 		for(int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile((float)(Math.random() * (0.2 - -0.2)) + -0.2f);
-			tiles[i].translation = 2.3f + i * -0.66f;
+			tiles[i].translation = -1.0f + tiles.length * 0.66f + i * -0.66f;
 		}
+		tiles[tiles.length - 3].noPipe();
+		tiles[tiles.length - 2].noPipe();
+		tiles[tiles.length - 1].noPipe();
 	}
 
 	/**
@@ -48,17 +56,31 @@ public class GLRenderer {
 			if(tile.translation <= -1.0f) {
 				tile.height = (float)(Math.random() * (0.2 - -0.2)) + -0.2f;
 				tile.translation += tiles.length * 0.66f;
+				tile.pipe();
 			}
 			tile.draw();
 			if(tile.collision()) {
 				try {
-					//GLRenderer.init(window);
+					restart();
 				} catch (Exception e_) {
 					e_.printStackTrace();
 				}
 			}
 		}
 		bird.draw();
+	}
+
+	/**
+	 * Restarts the game
+	 */
+	public static void restart() {
+		double start = glfwGetTime();
+		while (glfwGetTime() - start < 1.0) {
+			Tile.stop = true;
+			FlappyWindow.deltaTime = 0.0f;
+		}
+		GLRenderer.initTiles();
+		Tile.stop = false;
 	}
 
 	/**
