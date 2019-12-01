@@ -13,8 +13,9 @@ import static org.lwjgl.glfw.GLFW.*;
  */
 public class GLRenderer {
 	
-	static Tile[] tiles = new Tile[5];
+	private static Tile[] tiles = new Tile[5];
 	public static Bird bird;
+	public static int score = 0;
 	
 	/**
 	 * Initializes shaders and buffers
@@ -56,6 +57,10 @@ public class GLRenderer {
 			if(tile.translation <= -1.0f) {
 				tile.height = (float)(Math.random() * (0.2 - -0.2)) + -0.2f;
 				tile.translation += tiles.length * 0.66f;
+				if(tile.hasPipe()) {
+					score += 1;
+					System.out.println(score);
+				}
 				tile.pipe();
 			}
 			tile.draw();
@@ -79,6 +84,7 @@ public class GLRenderer {
 			Tile.stop = true;
 			FlappyWindow.deltaTime = 0.0f;
 		}
+		score = 0;
 		GLRenderer.initTiles();
 		Tile.stop = false;
 	}
