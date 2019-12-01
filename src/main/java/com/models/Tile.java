@@ -97,6 +97,14 @@ public class Tile {
     }
 
     /**
+     * Checks whether the tile has a pipe
+     * @return Returns a boolean representing the pipe state of the tile
+     */
+    public boolean hasPipe() {
+        return !noPipe;
+    }
+
+    /**
      * Checks for collision with pipes
      * @return Returns true on collision
      */
