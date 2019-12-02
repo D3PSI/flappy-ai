@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/D3PSI/flappy-ai.svg?branch=master)](https://travis-ci.com/D3PSI/flappy-ai) [![Java CI](https://github.com/D3PSI/flappy-ai/workflows/Java%20CI/badge.svg)](https://github.com/D3PSI/flappy-ai/workflows/Java%20CI/badge.svg)
+[![Build Status](https://travis-ci.com/D3PSI/flappy-ai.svg?branch=master)](https://travis-ci.com/D3PSI/flappy-ai) [![Java CI](https://github.com/D3PSI/flappy-ai/workflows/Java%20CI/badge.svg)](https://github.com/D3PSI/flappy-ai/actions?query=workflow%3A"Java+CI")
 
 # flappy-ai
 
