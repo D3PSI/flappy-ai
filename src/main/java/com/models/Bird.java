@@ -18,6 +18,7 @@ public class Bird extends Model2D {
     public float xOff = -0.66f; 
     public float yOff = 0.0f;
     private float yVel = 0.0f;
+    public int timeSurvived = 0;
 
     double start = glfwGetTime();
     double now = glfwGetTime();
@@ -43,6 +44,7 @@ public class Bird extends Model2D {
      * Draws the bird with the selected texture
      */
     public void draw() {
+        timeSurvived++;
         textures.get(0).bind();
 
         GL45.glBegin(GL45.GL_QUADS);
