@@ -11,7 +11,7 @@ import org.lwjgl.opengl.*;
 public class Model2D {
 
     private     Texture     tex;
-    protected   float[][]   vertices = new float[][]{
+    public      float[][]   vertices = new float[][]{
         {-0.5f, 0.5f},
         {0.5f, 0.5f},
         {0.5f, -0.5f},

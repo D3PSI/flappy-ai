@@ -16,6 +16,7 @@ public class GLRenderer {
 	private static Tile[] tiles = new Tile[5];
 	public static Bird bird;
 	public static int score = 0;
+	public static float distance = 0.0f;
 	
 	/**
 	 * Initializes shaders and buffers
@@ -54,6 +55,10 @@ public class GLRenderer {
 	public static void render() {
 		GL45.glClear(GL45.GL_COLOR_BUFFER_BIT | GL45.GL_DEPTH_BUFFER_BIT);
 		for(Tile tile : tiles) {
+			if(tile.inTile()) {
+				distance = tile.getDistance();
+				System.out.println(distance);
+			}
 			if(tile.translation <= -1.0f) {
 				tile.height = (float)(Math.random() * (0.2 - -0.2)) + -0.2f;
 				tile.translation += tiles.length * 0.66f;

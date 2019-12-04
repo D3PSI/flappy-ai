@@ -118,7 +118,29 @@ public class Tile {
                 }
             }
         }
+        System.out.println(inTile());
         return false;
+    }
+
+    /**
+     * Checks whether the bird is currently in the tile
+     * @return Returns true if yes
+     */
+    public boolean inTile() {
+        if(ground.vertices[1][0] > GLRenderer.bird.vertices[0][0] + GLRenderer.bird.xOff
+        && ground.vertices[0][0] < GLRenderer.bird.vertices[1][0] + GLRenderer.bird.xOff) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Returns the distance to the pipe
+     * @return The distance to the pipe
+     */
+    public float getDistance() {
+        return pipebot.vertices[1][0] - (GLRenderer.bird.vertices[1][0] + GLRenderer.bird.xOff);
     }
 
 }
