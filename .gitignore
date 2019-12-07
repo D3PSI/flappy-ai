@@ -36,3 +36,5 @@ hs_err_pid*
 
 # Gradle temporary files
 build/tmp/
+
+start.ps1
