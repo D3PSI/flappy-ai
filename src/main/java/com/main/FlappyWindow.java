@@ -10,14 +10,7 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
-import com.neat.*;
 
-import io.jenetics.BitChromosome;
-import io.jenetics.BitGene;
-import io.jenetics.Genotype;
-import io.jenetics.engine.Engine;
-import io.jenetics.engine.EvolutionResult;
-import io.jenetics.util.Factory;
 
 /**
  * Defines the window handler class
@@ -125,24 +118,7 @@ public class FlappyWindow {
 	 * @param args Command Line arguments
 	 */
 	public static void main(String[] args) {
-		//new FlappyWindow().run();
-        // 1.) Define the genotype (factory) suitable
-        //     for the problem.
-        Factory<Genotype<BitGene>> gtf =
-            Genotype.of(BitChromosome.of(10, 0.5));
- 
-        // 3.) Create the execution environment.
-        Engine<BitGene, Integer> engine = Engine
-            .builder(NEAT::eval, gtf)
-            .build();
- 
-        // 4.) Start the execution (evolution) and
-        //     collect the result.
-        Genotype<BitGene> result = engine.stream()
-            .limit(100)
-            .collect(EvolutionResult.toBestGenotype());
- 
-        System.out.println("Hello World:\n" + result);
+		new FlappyWindow().run();
 	}
 
 }

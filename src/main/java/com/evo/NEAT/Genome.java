@@ -221,7 +221,7 @@ public class Genome implements Comparable {
 
     }
 
-    private void generateNetwork() {
+    public void generateNetwork() {
 
         nodes.clear();
         //  Input layer

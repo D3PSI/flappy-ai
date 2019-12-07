@@ -9,6 +9,8 @@ import static org.lwjgl.glfw.GLFW.*;
 
 import java.util.ArrayList;
 
+import com.evo.NEAT.*;
+
 /**
  * Defines a static utility class to handle rendering operations
  * @author D3PSI
@@ -76,6 +78,9 @@ public class GLRenderer {
 				tile.height = (float)(Math.random() * (0.2 - -0.2)) + -0.2f;
 				tile.translation += tiles.length * 0.66f;
 				if(tile.hasPipe()) {
+					for(int i = 0; i < bird.size(); i++) {
+						bird.get(i).score++;
+					}
 					score += 1;
 					System.out.println(score);
 				}
@@ -102,6 +107,16 @@ public class GLRenderer {
 			bird.get(i).draw();
 		}
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	/**
 	 * Restarts the game

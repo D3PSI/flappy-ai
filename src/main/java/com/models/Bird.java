@@ -8,26 +8,29 @@ import org.lwjgl.opengl.*;
 
 import static org.lwjgl.glfw.GLFW.*;
 
+import com.evo.NEAT.*;
+
 /**
  * Defines a playable bird object
  * @author D3PSI
  */
-public class Bird extends Model2D {
+public class Bird extends Model2D{
 	
 	/*
 	 * neat vars
 	 */
 	public float vision[] = new float[4]; // input;
-	public int decision[] = new int[1]; //output;
+	public float decision[] = new float[1]; //output;
 	public int timeSurvived = 0;
 	public int fitness = 0;
 	public int lifespan = 0;
 	public int bestScore = 0;
 	public boolean dead = false;
-	public int sore = 0;
+	public int score = 0;
 	public int gen = 0;
 	public int genomeInputs = 4;
 	public int genomeOutputs = 1;
+	public Genome brain = new Genome();
 	
 	public float distToNextPipe = 0;
 	public float distToHighPipe = 0;
@@ -100,6 +103,38 @@ public class Bird extends Model2D {
     	vision[2] = distToLowPipe;
     	vision[1] = distToHighPipe;
     	
+    }
+    
+    public void think() {
+    	decision = brain.evaluateNetwork(vision);
+    	
+    	if(decision[0] > 0.6) {
+    		jump();
+    	}
+    	
+    }
+    
+    public Bird Crossover(Bird _bird) {
+    	Bird child = new Bird();
+    	child.brain = brain.crossOver(_bird.brain, child.brain);
+    	return child;
+    }
+    
+    public Bird clone() {
+    	Bird clone = new Bird();
+    	clone.fitness = fitness;
+    	clone.bestScore = score;
+    	clone.gen = gen;
+    	clone.brain = brain;
+    	clone.brain.setFitness(fitness);
+    	clone.brain.generateNetwork();
+    	
+    	return clone;
+    }
+    
+    public void calcFitness() {
+    	fitness = 1 + score * score + lifespan/20;
+    	brain.setFitness(fitness);
     }
 
 }
