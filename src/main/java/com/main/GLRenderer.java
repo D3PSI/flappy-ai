@@ -7,6 +7,8 @@ import com.models.*;
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 
+import java.util.ArrayList;
+
 /**
  * Defines a static utility class to handle rendering operations
  * @author D3PSI
@@ -14,7 +16,8 @@ import static org.lwjgl.glfw.GLFW.*;
 public class GLRenderer {
 	
 	private static Tile[] tiles = new Tile[5];
-	public static Bird bird;
+	public static ArrayList<Bird> bird = new ArrayList<Bird>();
+	public static int entities = 30;
 	public static int score = 0;
 	public static float distance = 0.0f;
 	
@@ -32,7 +35,9 @@ public class GLRenderer {
             "res/textures/bird2.png",
             "res/textures/bird3.png"
         });
-		bird = new Bird();
+		for(int i = 0; i < entities; i++) {
+			bird.add(new Bird());
+		}
 		initTiles();
 	}
 
@@ -55,9 +60,17 @@ public class GLRenderer {
 	public static void render() {
 		GL45.glClear(GL45.GL_COLOR_BUFFER_BIT | GL45.GL_DEPTH_BUFFER_BIT);
 		for(Tile tile : tiles) {
-			if(tile.inTile()) {
-				distance = tile.getDistance();
-				System.out.println(distance);
+			for(int i = 0; i < bird.size(); i++) {
+				if(tile.inTile(bird.get(i))) {
+					
+					bird.get(i).distToNextPipe = tile.getDistance(bird.get(i));
+					bird.get(i).distToHighPipe = tile.height + tile.SPREAD;
+					bird.get(i).distToLowPipe = tile.height - tile.SPREAD;
+					System.out.println(distance);
+					System.out.println(bird.get(i).distToHighPipe);
+					System.out.println(bird.get(i).distToLowPipe);
+					
+				}
 			}
 			if(tile.translation <= -1.0f) {
 				tile.height = (float)(Math.random() * (0.2 - -0.2)) + -0.2f;
@@ -69,21 +82,32 @@ public class GLRenderer {
 				tile.pipe();
 			}
 			tile.draw();
-			if(tile.collision()) {
-				try {
-					restart();
-				} catch (Exception e_) {
-					e_.printStackTrace();
+			for(int i = 0; i < bird.size(); i++) {
+				if(tile.collision(bird.get(i))) {
+					try {
+						bird.remove(i);
+					} catch (Exception e_) {
+						e_.printStackTrace();
+					}
 				}
 			}
+			if(bird.size() == 0) {
+				bird.clear();
+				System.out.println("all dead");
+				restart();
+				return;
+			}
 		}
-		bird.draw();
+		for(int i = 0; i < bird.size(); i++) {
+			bird.get(i).draw();
+		}
 	}
 
 	/**
 	 * Restarts the game
 	 */
 	public static void restart() {
+		System.out.println("restart Game...");
 		double start = glfwGetTime();
 		while (glfwGetTime() - start < 1.0) {
 			Tile.stop = true;
@@ -91,6 +115,10 @@ public class GLRenderer {
 		}
 		score = 0;
 		GLRenderer.initTiles();
+		for(int i = 0; i < entities; i++) {
+			bird.add(new Bird());
+			System.out.println("a bird has been revived...");
+		}
 		Tile.stop = false;
 	}
 
@@ -101,7 +129,9 @@ public class GLRenderer {
 	 */
     public static void keyboard(int key_, int action_) {
         if(key_ == GLFW_KEY_SPACE && action_ == GLFW_PRESS) {
-            bird.jump();
+        	for(int i = 0; i < bird.size(); i++) {
+        		bird.get(i).jump();
+        	}
 		}
 
 		if(key_ == GLFW_KEY_1 && action_ == GLFW_PRESS) {

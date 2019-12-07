@@ -13,12 +13,31 @@ import static org.lwjgl.glfw.GLFW.*;
  * @author D3PSI
  */
 public class Bird extends Model2D {
+	
+	/*
+	 * neat vars
+	 */
+	public float vision[] = new float[4]; // input;
+	public int decision[] = new int[1]; //output;
+	public int timeSurvived = 0;
+	public int fitness = 0;
+	public int lifespan = 0;
+	public int bestScore = 0;
+	public boolean dead = false;
+	public int sore = 0;
+	public int gen = 0;
+	public int genomeInputs = 4;
+	public int genomeOutputs = 1;
+	
+	public float distToNextPipe = 0;
+	public float distToHighPipe = 0;
+	public float distToLowPipe = 0;
 
     private static ArrayList<Texture> textures = new ArrayList<>();
     public float xOff = -0.66f; 
     public float yOff = 0.0f;
     private float yVel = 0.0f;
-    public int timeSurvived = 0;
+    
 
     double start = glfwGetTime();
     double now = glfwGetTime();
@@ -44,7 +63,7 @@ public class Bird extends Model2D {
      * Draws the bird with the selected texture
      */
     public void draw() {
-        timeSurvived++;
+        lifespan++;
         textures.get(0).bind();
 
         GL45.glBegin(GL45.GL_QUADS);
@@ -73,6 +92,14 @@ public class Bird extends Model2D {
      */
     public void jump() {
         yVel = -0.5f;
+    }
+    
+    public void look() {
+    	vision[0] = yVel;
+    	vision[1] = distToNextPipe;
+    	vision[2] = distToLowPipe;
+    	vision[1] = distToHighPipe;
+    	
     }
 
 }

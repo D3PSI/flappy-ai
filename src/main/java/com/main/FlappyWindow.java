@@ -111,7 +111,7 @@ public class FlappyWindow {
 
 		while (!glfwWindowShouldClose(window)) {
             double last = glfwGetTime();
-			GLRenderer.render();
+            GLRenderer.render();
 			glfwPollEvents();
 			glfwSwapBuffers(window);
             double now = glfwGetTime();

@@ -106,29 +106,32 @@ public class Tile {
 
     /**
      * Checks for collision with pipes
+     * @param bird_ to check collision
      * @return Returns true on collision
      */
-    public boolean collision() {
+    public boolean collision(Bird bird_) {
         if(!noPipe) {
-            if(pipebot.vertices[1][0] > GLRenderer.bird.vertices[0][0] + GLRenderer.bird.xOff
-                && pipebot.vertices[0][0] < GLRenderer.bird.vertices[1][0] + GLRenderer.bird.xOff) {
-                if(GLRenderer.bird.vertices[2][1] + GLRenderer.bird.yOff < pipebot.vertices[0][1] 
-                    || GLRenderer.bird.vertices[1][1] + GLRenderer.bird.yOff > pipetop.vertices[1][1]) {
+            if(pipebot.vertices[1][0] > bird_.vertices[0][0] + bird_.xOff
+                && pipebot.vertices[0][0] < bird_.vertices[1][0] + bird_.xOff) {
+                if(bird_.vertices[2][1] + bird_.yOff < pipebot.vertices[0][1] 
+                    || bird_.vertices[1][1] + bird_.yOff > pipetop.vertices[1][1]) {
+                	bird_.dead = true;
                     return true;
                 }
             }
         }
-        System.out.println(inTile());
+        System.out.println(inTile(bird_));
         return false;
     }
 
     /**
      * Checks whether the bird is currently in the tile
+     * @param bird_ to check in tile
      * @return Returns true if yes
      */
-    public boolean inTile() {
-        if(ground.vertices[1][0] > GLRenderer.bird.vertices[0][0] + GLRenderer.bird.xOff
-        && ground.vertices[0][0] < GLRenderer.bird.vertices[1][0] + GLRenderer.bird.xOff) {
+    public boolean inTile(Bird bird_) {
+        if(ground.vertices[1][0] > bird_.vertices[0][0] + bird_.xOff
+        && ground.vertices[0][0] < bird_.vertices[1][0] + bird_.xOff) {
             return true;
         } else {
             return false;
@@ -137,10 +140,11 @@ public class Tile {
 
     /**
      * Returns the distance to the pipe
+     * @param bird_ to get distance
      * @return The distance to the pipe
      */
-    public float getDistance() {
-        return pipebot.vertices[1][0] - (GLRenderer.bird.vertices[1][0] + GLRenderer.bird.xOff);
+    public float getDistance(Bird bird_) {
+        return pipebot.vertices[1][0] - (bird_.vertices[1][0] + bird_.xOff);
     }
 
 }
