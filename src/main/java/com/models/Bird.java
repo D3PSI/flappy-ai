@@ -136,5 +136,9 @@ public class Bird extends Model2D{
     	fitness = 1 + score * score + lifespan/20;
     	brain.setFitness(fitness);
     }
+    
+    public void update() {
+    	
+    }
 
 }
